@@ -90,7 +90,7 @@
                     android:id="@+id/btn5"
                     android:layout_margin="10dp"
                     android:layout_gravity="center_vertical"
-                    android:clickable="true"
+                    android:clickable="false"
                     android:layout_weight="0.125"
                     android:background="#ffff6432"
                     android:focusable="false"

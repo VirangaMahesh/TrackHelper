@@ -1,16 +1,25 @@
 package com.example.viranga.trackhelp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationListener;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.viranga.trackhelp.UI.SelectHelpers;
 
 
-public class SelectCategory extends ActionBarActivity {
+public class SelectCategory extends ActionBarActivity implements LocationListener {
 
     Button btnOne,btnTwo,btnThree,btnFour,btnFive,btnSix,btnSeven;
-
+    double longitude,latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +35,21 @@ public class SelectCategory extends ActionBarActivity {
         btnSix=(Button)findViewById(R.id.btn6);
         btnSeven=(Button)findViewById(R.id.btn7);
 
+        btnOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), longitude + " " + latitude, Toast.LENGTH_LONG).show();
+                Intent vp = new Intent(SelectCategory.this, SelectHelpers.class);
+                startActivity(vp);
 
+            }
+
+        });
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 4000, 0, listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, this);
 
     }
 
@@ -52,5 +75,26 @@ public class SelectCategory extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        longitude=location.getLongitude();
+        latitude=location.getLatitude();
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }
